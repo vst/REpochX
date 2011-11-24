@@ -1,0 +1,42 @@
+{
+    "name": "Example Grammatical Evolution",
+    "description": "This evolution is just to demonstrate the REpochX. Its simple and stupid.",
+    "loggerName": "repochx",
+    "loggerPath": "repochx.log",
+    "loggerLevel": 20,
+    "libraries": [],
+    "scripts": [],
+    "probCrossover": 0.80,
+    "probMutation": 0.15,
+    "probReproduction": 0.05,
+    "terminationFitness": 0,
+    "sizeElites": 5,
+    "sizePool": 10000,
+    "sizePopulation": 1000,
+    "noOfGenerations": 10,
+    "noOfRuns": 1,
+    "maxInitDepth": 8,
+    "maxDepth": 8,
+    "grammarFile": "grammar.bnf",
+    "onEvolutionStart": "
+function (configuration) {
+  testFunc <<- function (x) {x**2 + 2*x + 1}
+  testData <<- cbind(input=1:100, result=testFunc(1:100))
+}
+",
+    "onEvolutionEnd": "function (fittestProgram) fittestProgram",
+    "onRunStart": "function (run) run",
+    "onRunEnd": "function (run, fittestProgram) fittestProgram",
+    "onGenerationStart": "function (generation) generation",
+    "onGenerationEnd": "function (generation, fittestProgram) fittestProgram",
+    "fitnessFunction": "
+function (program) {
+  candidateFunction = eval(parse(text=sprintf(\"function (x) return(%s)\", program)))
+  return(sum(abs(candidateFunction(1:100) - testData[,'result'])))
+}
+",
+    "custom": {
+	"version" : 1,
+	"message" : "hello"
+    }
+}
