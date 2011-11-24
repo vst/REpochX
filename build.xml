@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="REpochX" basedir="java/" default="main">
+  <property name="dir.src" value="src" />
+  <property name="dir.build" value="bin" />
+  <property name="dir.target" value="target" />
+  <property name="dir.lib" value="lib"/>
+  <property name="main-class" value="com.vsthost.gp.Evolver"/>
+  <property name="jar.name" value="REpochX.jar"/>
+  
+  <path id="classpath">
+    <fileset dir="${dir.lib}" includes="**/*.jar"/>
+  </path>
+  
+  <pathconvert property="lib.list" pathsep=" ">
+    <path refid="classpath" />
+    <mapper>
+      <chainedmapper>
+            <flattenmapper />
+      </chainedmapper>
+    </mapper>
+  </pathconvert>
+
+  <target name="clean">
+    <delete dir="${dir.build}"/>
+  </target>
+  
+  <target name="compile" depends="clean">
+    <mkdir dir="${dir.build}" />
+    <javac srcdir="${dir.src}" destdir="${dir.build}" classpathref="classpath" includeantruntime="false" />
+  </target>
+  
+  <target name="jar" depends="compile">
+    <mkdir dir="${dir.target}"/>
+    <jar destfile="${dir.target}/${jar.name}" basedir="${dir.build}">
+      <manifest>
+	<attribute name="Main-Class" value="${main-class}"/>
+	<attribute name="Class-Path" value="${lib.list}" />
+      </manifest>
+      <zipgroupfileset dir="${dir.lib}" includes="*.jar"/>
+    </jar>
+  </target>
+</project>

@@ -1,6 +1,6 @@
 package com.vsthost.gp;
 
-import java.io.FileNotFoundException;
+import java.io.FileNotFoundException;	
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -313,6 +313,8 @@ public class Evolver extends GRModel {
 		} catch (RBindingREXPMismatchException e1) {
 			Evolver.errorExit("REXPMismatch exception while initializing REngine.");
 		}
+		
+		System.out.print("Dneme");
 		
 		// Attempt to initialize end configure the evolution system:
 		Evolver evolver = null;

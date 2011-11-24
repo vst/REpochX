@@ -1,0 +1,8 @@
+Package: repochx
+Version: 0.0.1
+Architecture: all
+Maintainer: Vehbi Sinan Tunalioglu <vst@vsthost.com>
+Depends: r-cran-rjava
+Section: main
+Priority: optional
+Description: Command-line grammatical evolution based on R and EpochX

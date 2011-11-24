@@ -92,9 +92,9 @@ public final class MathUtils {
 	
 	/**
 	 * Returns the inverse hyperbolic cosine of a <code>double</code> value.
-	 * Note that <i>cosh(±acosh(x))&nbsp;=&nbsp;x</i>; this function arbitrarily returns the positive branch.
+	 * Note that <i>cosh(acosh(x))&nbsp;=&nbsp;x</i>; this function arbitrarily returns the positive branch.
 	 * <p>The identity is:
-	 * <p><i>arcosh(x)&nbsp;=&nbsp;ln(x&nbsp;±&nbsp;sqrt(x<sup>2</sup>&nbsp;-&nbsp;1))</i>
+	 * <p><i>arcosh(x)&nbsp;=&nbsp;ln(x&nbsp;&nbsp;sqrt(x<sup>2</sup>&nbsp;-&nbsp;1))</i>
 	 * <p>Special cases:
 	 * <ul>
 	 * <li>If the argument is NaN or less than one, then the result is NaN.

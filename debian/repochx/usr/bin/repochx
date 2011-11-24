@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Set the R_HOME Environment Variable:
+export R_HOME=/usr/lib/R
+
+# Set the Java Runtime Parameters:
+JAVA_RUNTIME_PARAMS="-Xmx512m -Djava.library.path=/usr/lib/R/site-library/rJava/jri"
+
+# Run the JAR file:
+java $JAVA_RUNTIME_PARAMS -jar /usr/share/java/REpochX.jar "$@"
