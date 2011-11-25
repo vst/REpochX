@@ -1,5 +1,6 @@
 *~
-repochx.deb
+repochx*.deb
 java/target/
 java/bin/
 debian/repochx/usr/share/java/REpochX.jar
+Makefile.local

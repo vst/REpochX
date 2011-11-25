@@ -1,6 +1,6 @@
 DEB_PACKAGE      = repochx
-DEB_VERSION      = ` cat debian/repochx/DEBIAN/control | grep -E "^Version:" | cut -f 2 -d ":" | tr -d " " `
-DEB_RELEASE_FILE = $(DEB_PACKAGE)_$(DEB_VERSION)
+DEB_VERSION      := `cat debian/repochx/DEBIAN/control | grep -E "^Version:" | cut -f 2 -d ":" | tr -d " "`
+DEB_RELEASE_FILE := $(DEB_PACKAGE)_$(DEB_VERSION)
 
 all: jar
 
