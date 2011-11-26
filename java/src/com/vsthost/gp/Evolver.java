@@ -296,7 +296,7 @@ public class Evolver extends GRModel {
 		}
 		
 		// Instantiate and set the RBinding:
-		Evolver.logger.info("Initializing the R binding.");
+		Evolver.logger.finest("Initializing the R binding.");
 		RBinding rBinding = null;
 		try {
 			rBinding = RBinding.getInstance();
@@ -313,8 +313,6 @@ public class Evolver extends GRModel {
 		} catch (RBindingREXPMismatchException e1) {
 			Evolver.errorExit("REXPMismatch exception while initializing REngine.");
 		}
-		
-		System.out.print("Dneme");
 		
 		// Attempt to initialize end configure the evolution system:
 		Evolver evolver = null;
@@ -358,7 +356,7 @@ public class Evolver extends GRModel {
         		}
 
             	// Log:
-            	Evolver.logger.info("Starting run: " + runNumber);
+            	Evolver.logger.finest("Starting run: " + runNumber);
             	
         		// Invoke the onRunStart of the evolver:
         		finalEvolver.onRunStart(runNumber);
@@ -372,7 +370,7 @@ public class Evolver extends GRModel {
         		final GRCandidateProgram program = (GRCandidateProgram) Stats.get().getStat(StatField.RUN_FITTEST_PROGRAM);
         		
             	// Log:
-            	Evolver.logger.info("Ending run: " + runNumber + " [" + ((Double) Stats.get().getStat(StatField.RUN_FITNESS_MIN)) + "] " + program.toString());
+            	Evolver.logger.finest("Ending run: " + runNumber + " [" + ((Double) Stats.get().getStat(StatField.RUN_FITNESS_MIN)) + "] " + program.toString());
             	
         		// Invoke the onRunEnd of the evolver:
         		finalEvolver.onRunEnd(runNumber, program.toString());
@@ -389,21 +387,47 @@ public class Evolver extends GRModel {
         		}
 
             	// Log:
-            	Evolver.logger.info("Starting generation: " + generationNumber);
+            	//Evolver.logger.finest("Starting generation: " + generationNumber);
             	
         		// Invoke the onRunStart of the evolver:
         		finalEvolver.onGenerationStart(generationNumber);
             }
         
             public void onGenerationEnd() {
+        		// Get the run number:
+        		Integer runNumber = (Integer) Stats.get().getStat(StatField.RUN_NUMBER);
+
         		// Get the generation number:
         		Integer generationNumber = (Integer) Stats.get().getStat(StatField.GEN_NUMBER);
        
         		// Extract the fittest program of the generation:
         		final GRCandidateProgram program = (GRCandidateProgram) Stats.get().getStat(StatField.GEN_FITTEST_PROGRAM);
+
+        		// Get the minimum of the fitness score of this generation:
+        		Double fitnessScoreMin = (Double) Stats.get().getStat(StatField.GEN_FITNESS_MIN);
+
+        		// Get the fitness score of the fittest program:
+        		Double fitnessScore = finalEvolver.getFitness(program);
         		
-            	// Log:
-            	Evolver.logger.info("Ending generation: " + generationNumber + " [" + ((Double) Stats.get().getStat(StatField.GEN_FITNESS_MIN)) + "] " + program.toString());
+        		// Pad for NaN values of fitnessScoreMin:
+        		String padding = "";
+        		if (fitnessScoreMin.isNaN()) {
+        			padding = "            ";
+        		}	
+        		
+        		// Log on to the console:
+        		String message = String.format(
+        				"[%02d/%02d - %03d/%03d] [%s%+.8e] [%+.8e] -> %s",
+        				runNumber + 1, finalEvolver.getNoRuns(),
+        				generationNumber, finalEvolver.getNoGenerations(),
+        				padding,
+        				fitnessScoreMin,
+        				fitnessScore,
+        				program.toString());
+        		System.out.println(message);
+        		
+        		// Log:
+        		//Evolver.logger.finest("Ending generation: " + generationNumber + " [" + ((Double) Stats.get().getStat(StatField.GEN_FITNESS_MIN)) + "] " + program.toString());
 
             	// Invoke the onRunEnd of the evolver:
         		finalEvolver.onGenerationEnd(generationNumber, program.toString());
@@ -411,18 +435,17 @@ public class Evolver extends GRModel {
         });
 
         // Fire the onEvolutionStart event:
-        Evolver.logger.info("Starting evolution.");
+        Evolver.logger.finest("Starting evolution.");
         evolver.onEvolutionStart(evolver.getConfiguration().toString());
         
 		// Run the evolution:
 		evolver.run();
 		
         // Fire the onEvolutionEnd event:
-        Evolver.logger.info("Ending evolution: " + ((GRCandidateProgram) Stats.get().getStat(StatField.RUN_FITTEST_PROGRAM)).toString());
-        evolver.onEvolutionEnd(((GRCandidateProgram) Stats.get().getStat(StatField.RUN_FITTEST_PROGRAM)).toString());
-        System.out.println("[" + ((Double) Stats.get().getStat(StatField.RUN_FITNESS_MIN)) + "] " + ((GRCandidateProgram) Stats.get().getStat(StatField.RUN_FITTEST_PROGRAM)).toString());
+        Evolver.logger.finest("Ending evolution: " + ((GRCandidateProgram) Stats.get().getStat(StatField.RUN_FITTEST_PROGRAM)).toString());
         
 		// Done. Exit...
 		RBinding.closeREngine();
+		System.out.println("Done. Exiting...");
 	}
 }

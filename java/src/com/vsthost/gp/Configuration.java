@@ -26,6 +26,7 @@ import com.google.gson.JsonSyntaxException;
  */
 public class Configuration {
 	
+	private final String version = "0.0.1";
 	private String configFile;
 	private String uuid = UUID.randomUUID().toString();
 	private String name = "#N/A";
@@ -541,5 +542,12 @@ public class Configuration {
         
         // Done, return the configuration:
 		return config;
+	}
+
+	/**
+	 * @return the version
+	 */
+	public String getVersion() {
+		return version;
 	}
 }
