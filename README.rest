@@ -1,0 +1,112 @@
+=====================================================================
+ REpochX - A Grammatical Evolution Application based on R and EpochX
+=====================================================================
+
+REpochX is a command-line driven grammatical evolution application. It
+exposes the grammatical evolution (GE) functionality of EpochX_ to R_
+through signals and slots invoked at times when needed. The grammar,
+evolution parameters, the R code to compute the fitness scores of
+candidate programs and slots to be invoked on signals emitted are all
+specified in a JSON_-formatted configuration file.
+
+Usage
+=====
+
+Running the application is as simple as::
+  
+  repochx config.json
+
+Rationale
+=========
+
+While we were playing around with *Genetic Programming* (GP) to build
+our automated high-frequency trading system, we realized the need for
+a convenient GE software which would enable us to run our *agile*
+research agenda. After some hacking around, we've concluded that we
+need mainly the ability of using R effectively (1) while computing the
+fitness scores of candidate programs, and (2) to emit some R-based
+functionality at particular times, like before (after) a generation or
+run or the entire evolution starts (ends).
+
+REpochX is nothing more than this. It relies on GE and event adapter
+functionalities of EpochX_ and the ability of running R code which is
+provided in OR along with the configuration file.
+
+Question and Answers
+====================
+
+Where is the documentation?
+---------------------------
+
+Sorry, nowhere yet. For now, please::
+
+   cd examples
+   less config.json
+   repochx config.json
+
+This is just classical dummy: an ``x**2 + 2*x + 1`` estimator.
+
+How to build and run:
+---------------------
+
+On Debian/Ubuntu (assuming that Java SDK is installed)::
+
+  make dpkg
+  sudo apt-get install r-cran-rjava repochx_<VERSION>.deb
+  cd example
+  repochx config.json
+
+On other distributions (assuming that Java SDK is installed)::
+
+  make jar
+  cd example
+  R
+  > install.packages("rJava")
+  > q()
+  export R_HOME=/usr/lib/R ## Or wherever it is.
+  REPOCHX_RUNTIME_PARAMS="-Xmx512m -Djava.library.path=/usr/lib/R/site-library/rJava/jri" ## Or wherever it is
+  java $REPOCHX_RUNTIME_PARAMS -jar debian/repochx/usr/share/java/REpochX.jar config.json
+
+On Windowz: Not tested. Will not be tested by us, most probably.
+
+Why R?
+------
+
+Firstly, we love it. But more is that it's free and open source
+software. Furthermore, we've been using, teaching and contributing to
+R for almost a decade.
+
+Why EpochX?
+-----------
+
+Firstly, we love it. But more is that it's free and open source
+software and we liked the modern approach employed for the internal
+API design. Tom_ did quite a good job and we came to know that more is
+on the way.
+
+Why not entirely in Java?
+-------------------------
+
+Firstly, we hate Java. That's fair enough for this decision, but
+still, R is much more effective for statistical computing which we
+heavily depend on every minute.
+
+What about the licensing?
+-------------------------
+
+It is GPL_.
+
+Are you happy?
+--------------
+
+Not exactly. We wish that we could provide better documentation and a more
+error-proof application. Other than these, we've gained huge
+efficiency for our own research. Hope that it will entertain you.
+
+**Happy hacking...**
+
+.. _EpochX: http://www.epochx.org/ 
+.. _R: http://www.r-project.org/ 
+.. _GPL: http://www.gnu.org/copyleft/gpl.html
+.. _Tom: http://www.tc33.org/
+.. _JSON: http://www.json.org/

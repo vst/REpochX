@@ -1,40 +1,161 @@
 {
+    /**
+     * Specifies the name of the evolution. Useful for experiment design.
+     */
     "name": "Example Grammatical Evolution",
-    "description": "This evolution is just to demonstrate the REpochX. Its simple and stupid.",
+
+    /**
+     * Gives the description of the evolution. Useful to remember what
+     * the heck you've been doing.
+     */
+    "description": "This evolution is just to demonstrate the functionality of REpochX. Its simple and stupid.",
+
+    /**
+     * Gives the name of the logger which you might need for the logging
+     * package from CRAN.
+     */
     "loggerName": "repochx",
+
+    /**
+     * Gives the path of the log file to be produced.
+     */
     "loggerPath": "repochx.log",
+
+    /**
+     * Gives the logger level.
+     */
     "loggerLevel": 20,
+
+    /**
+     * Declares which libraries should be loaded while setting up R.
+     */
     "libraries": [],
+
+    /**
+     * Declares which scripts should be loaded while setting up R.
+     */
     "scripts": [],
+
+    /**
+     * Defines the crossover probability.
+     */
     "probCrossover": 0.80,
+
+    /**
+     * Defines the mutation probability.
+     */
     "probMutation": 0.15,
+
+    /**
+     * Defines the reproduction probability.
+     */
     "probReproduction": 0.05,
+
+    /**
+     * Defines the best fitness score which can be achieved. Remember that
+     * EpochX tries to minimize the fitness score (we are using Tournament for
+     * selection)
+     */
     "terminationFitness": 0,
+
+    /**
+     * Defines the number of the elites carried accross generations.
+     */
     "sizeElites": 5,
+
+    /**
+     * Defines the pool size.
+     */
     "sizePool": 10000,
+
+    /**
+     * Defines the population size.
+     */
     "sizePopulation": 1000,
+
+    /**
+     * Defines the number of generations.
+     */
     "noOfGenerations": 10,
+
+    /**
+     * Defines the number of runs. Attention: There is a bug as of now. Use `1`.
+     */
     "noOfRuns": 1,
+
+    /**
+     * Defines the maximum initial depth for candidate programs.
+     */
     "maxInitDepth": 8,
+
+    /**
+     * Defines the maximum depth for candidate programs.
+     */
     "maxDepth": 8,
+
+    /**
+     * Gives the path of the grammar file.
+     */
     "grammarFile": "grammar.bnf",
+
+    /**
+     * Defines the R function to be invoked before the evolution starts.
+     * Don't forget to use '<<-' operator to initialize and assign variables
+     * which you want to reach globally, like from the 'getFitness' slot.
+     *
+     * Also, note that this entire configuration object is passed to
+     * onEvolutionStart as a JSON string. You can read it with
+     * RJSONIO::fromJson function (if needed).
+     *
+     * Finally, it is to be noted that all the slots can be defined
+     * in a seperate R script and you can simply provide just the names
+     * of the respective functions.
+     */
     "onEvolutionStart": "
 function (configuration) {
   testFunc <<- function (x) {x**2 + 2*x + 1}
   testData <<- cbind(input=1:100, result=testFunc(1:100))
 }
 ",
+    /**
+     * Defines the R function to be invoked after the evolution ends.
+     */
     "onEvolutionEnd": "function (fittestProgram) fittestProgram",
+
+    /**
+     * Defines the R function to be invoked before each run starts.
+     */
     "onRunStart": "function (run) run",
+
+    /**
+     * Defines the R function to be invoked after each run ends.
+     */
     "onRunEnd": "function (run, fittestProgram) fittestProgram",
+
+    /**
+     * Defines the R function to be invoked before each generation starts.
+     */
     "onGenerationStart": "function (generation) generation",
+
+    /**
+     * Defines the R function to be invoked after each generation ends.
+     */
     "onGenerationEnd": "function (generation, fittestProgram) fittestProgram",
+    
+    /**
+     * Defines the R function to be invoked to compute the fitness score
+     * of a candidate program.
+     */
     "fitnessFunction": "
 function (program) {
   candidateFunction = eval(parse(text=sprintf(\"function (x) return(%s)\", program)))
   return(sum(abs(candidateFunction(1:100) - testData[,'result'])))
 }
 ",
+    /**
+     * Here comes all the additional configuration parameters (even some data
+     * or whatever you like) which you want to pass to R.
+     */
     "custom": {
 	"version" : 1,
 	"message" : "hello"
