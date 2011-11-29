@@ -52,9 +52,12 @@ How to build and run:
 On Debian/Ubuntu (assuming that Java SDK is installed)::
 
   make dpkg
-  sudo apt-get install r-cran-rjava repochx_<VERSION>.deb
+  sudo apt-get install r-cran-rjava
+  sudo dpkg -i repochx_<VERSION>.deb
   cd example
   repochx config.json
+
+or you can download the .deb package from the Downloads_ section.
 
 On other distributions (assuming that Java SDK is installed)::
 
@@ -110,3 +113,4 @@ efficiency for our own research. Hope that it will entertain you.
 .. _GPL: http://www.gnu.org/copyleft/gpl.html
 .. _Tom: http://www.tc33.org/
 .. _JSON: http://www.json.org/
+.. _Downloads: https://github.com/vst/REpochX/downloads
