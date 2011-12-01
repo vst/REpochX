@@ -20,7 +20,7 @@ Rationale
 =========
 
 While we were playing around with *Genetic Programming* (GP) to build
-our automated high-frequency trading system, we realized the need for
+our automated trading system, we realized the need for
 a convenient GE software which would enable us to run our *agile*
 research agenda. After some hacking around, we've concluded that we
 need mainly the ability of using R effectively (1) while computing the
