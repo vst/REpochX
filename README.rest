@@ -13,7 +13,7 @@ Usage
 =====
 
 Running the application is as simple as::
-  
+
   repochx config.json
 
 Rationale
@@ -51,10 +51,11 @@ How to build and run:
 
 On Debian/Ubuntu (assuming that Java SDK is installed)::
 
+  apt-get install ant
   make dpkg
   sudo apt-get install r-cran-rjava
   sudo dpkg -i repochx_<VERSION>.deb
-  cd example
+  cd /usr/share/REpochX/example/
   repochx config.json
 
 or you can download the .deb package from the Downloads_ section.
@@ -108,8 +109,8 @@ efficiency for our own research. Hope that it will entertain you.
 
 **Happy hacking...**
 
-.. _EpochX: http://www.epochx.org/ 
-.. _R: http://www.r-project.org/ 
+.. _EpochX: http://www.epochx.org/
+.. _R: http://www.r-project.org/
 .. _GPL: http://www.gnu.org/copyleft/gpl.html
 .. _Tom: http://www.tc33.org/
 .. _JSON: http://www.json.org/
